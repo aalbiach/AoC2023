@@ -5,7 +5,7 @@ import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
-import java.util.Optional;
+import java.util.Objects;
 import java.util.regex.Pattern;
 
 public class Day2 {
@@ -49,10 +49,10 @@ public class Day2 {
     private int extractMaxColor(String color, String line) {
         var colorPatternMatcher = COLOR_PATTERN.matcher(line);
         return colorPatternMatcher.results()
-                .map(colorMatcher -> Optional.ofNullable(colorMatcher.group(color))
-                        .map(Integer::parseInt)
-                        .orElse(0))
-                .max(Integer::compareTo)
+                .map(colorMatcher -> colorMatcher.group(color))
+                .filter(Objects::nonNull)
+                .mapToInt(Integer::parseInt)
+                .max()
                 .orElse(0);
     }
 
