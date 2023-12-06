@@ -23,9 +23,9 @@ public class Day2 {
 
     public int calculateTotalGamesAllowed(int redCubesLimit, int greenCubesLimit, int blueCubesLimit, List<String> games) {
         return games.stream().mapToInt(game -> {
-            int redMax = extractAndMaxColor("red", game);
-            int greenMax = extractAndMaxColor("green", game);
-            int blueMax = extractAndMaxColor("blue", game);
+            int redMax = extractMaxColor("red", game);
+            int greenMax = extractMaxColor("green", game);
+            int blueMax = extractMaxColor("blue", game);
 
             if (redMax > redCubesLimit || greenMax > greenCubesLimit || blueMax > blueCubesLimit) {
                 return 0;
@@ -38,15 +38,15 @@ public class Day2 {
 
     public int calculatePowerGames(List<String> games) {
         return games.stream().mapToInt(game -> {
-            int redMax = extractAndMaxColor("red", game);
-            int greenMax = extractAndMaxColor("green", game);
-            int blueMax = extractAndMaxColor("blue", game);
+            int redMax = extractMaxColor("red", game);
+            int greenMax = extractMaxColor("green", game);
+            int blueMax = extractMaxColor("blue", game);
 
             return redMax * greenMax * blueMax;
         }).sum();
     }
 
-    private int extractAndMaxColor(String color, String line) {
+    private int extractMaxColor(String color, String line) {
         var colorPatternMatcher = COLOR_PATTERN.matcher(line);
         return colorPatternMatcher.results()
                 .map(colorMatcher -> Optional.ofNullable(colorMatcher.group(color))
